@@ -2,13 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>DK WIN NEW MOD</title>
     <style>
+        /* --- একদম স্ক্রিনে ফিট করার জন্য বেসিক সেটিংস --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; overflow: hidden; background: #000; font-family: 'Arial', sans-serif; }
+        body, html { 
+            height: 100%; 
+            width: 100%;
+            overflow: hidden; 
+            background: #000; 
+            font-family: 'Arial', sans-serif;
+            position: fixed; /* স্ক্রিন নড়াচড়া বন্ধ করবে */
+        }
 
-        /* --- LOGIN PAGE (STAYS SAME) --- */
+        /* --- LOGIN PAGE --- */
         #loginPage {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             height: 100vh; background: #000;
@@ -50,12 +58,29 @@
             text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
 
-        /* --- NEW SIGNAL PANEL DESIGN (AS PER SCREENSHOT) --- */
+        /* --- FIXED GAME PAGE (সমস্যা সমাধান এখানে) --- */
+        #gamePage { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; 
+            height: 100%; /* সম্পূর্ণ উচ্চতা */
+            z-index: 1;
+        }
+        
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none;
+            display: block;
+        }
+
+        /* --- SIGNAL PANEL (STAYS ON TOP) --- */
         #signalPanel {
-            position: absolute; top: 150px; left: 50%; transform: translateX(-50%);
-            width: 160px; height: 160px; /* Square box as per image */
-            background: rgba(18, 2, 28, 0.95); /* Dark purple/black shade */
-            border: 2px solid #1fa7ff; /* Blueish border from screenshot */
+            position: absolute; top: 100px; left: 50%; transform: translateX(-50%);
+            width: 140px; height: 140px;
+            background: rgba(18, 2, 28, 0.9);
+            border: 2px solid #1fa7ff;
             border-radius: 18px;
             color: #fff; z-index: 10000;
             box-shadow: 0 0 15px rgba(31, 167, 255, 0.4);
@@ -63,16 +88,10 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center;
         }
-        .panel-team-name {
-            font-size: 14px; font-weight: bold; color: #1fa7ff;
-            text-transform: uppercase; margin-bottom: 4px;
-        }
-        .panel-time { font-size: 12px; color: #aaa; margin-bottom: 8px; }
-        .panel-countdown { font-size: 18px; font-weight: bold; color: #ff00ff; margin-bottom: 5px; }
-        .p-signal { font-size: 32px; font-weight: 900; color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
-
-        #gamePage { display: none; height: 100vh; position: relative; }
-        iframe { width: 100%; height: 100%; border: none; }
+        .panel-team-name { font-size: 12px; font-weight: bold; color: #1fa7ff; }
+        .panel-time { font-size: 10px; color: #aaa; }
+        .panel-countdown { font-size: 16px; font-weight: bold; color: #ff00ff; }
+        .p-signal { font-size: 28px; font-weight: 900; color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
     </style>
 </head>
 <body>
@@ -83,7 +102,7 @@
             <div class="round-logo">TEAM<br>AV</div>
             <div>
                 <h2 style="color:#00ff00; font-size:18px;">TEAM AV</h2>
-                <p style="color:#ccff00; font-size:11px; font-weight:bold;">TEAM AV • 1-MINUTE AUTO SIGNAL</p>
+                <p style="color:#ccff00; font-size:11px; font-weight:bold;">1-MINUTE AUTO SIGNAL</p>
             </div>
         </div>
         <div class="main-box">
@@ -117,6 +136,9 @@
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('gamePage').style.display = 'block';
             document.getElementById('gameIframe').src = REG_LINK;
+            
+            // স্ক্রিন সাইজ অ্যাডজাস্টমেন্ট
+            window.scrollTo(0,1);
             startMasterSync();
             startCountdown();
         } else { alert("WRONG ACCESS KEY!"); }
@@ -145,7 +167,6 @@
     }
     function dragEnd() { active = false; }
 
-    // Logic for Countdown
     function startCountdown() {
         setInterval(() => {
             const now = new Date();
@@ -156,7 +177,6 @@
         }, 1000);
     }
 
-    // Real-time Sync Logic
     async function startMasterSync() {
         try {
             const response = await fetch(API_URL, {
