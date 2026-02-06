@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DK WIN NEW MOD</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { height: 100%; overflow: hidden; background: #000; font-family: 'Arial', sans-serif; }
+
+        /* --- LOGIN PAGE (STAYS SAME) --- */
+        #loginPage {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100vh; background: #000;
+            background-image: linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .container { width: 90%; max-width: 380px; }
+        .header-box { 
+            border: 1px solid #00ff00; border-radius: 20px; padding: 15px; 
+            margin-bottom: 25px; background: rgba(0, 20, 0, 0.8); 
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+        .round-logo { 
+            width: 60px; height: 60px; border-radius: 50%; 
+            border: 2px solid #00ff00; display: flex; align-items: center; 
+            justify-content: center; background: #000; color: #00ff00;
+            font-weight: bold; font-size: 12px; text-align: center;
+            box-shadow: 0 0 15px #00ff00;
+        }
+        .main-box { 
+            border: 1px solid #00ff00; border-radius: 20px; padding: 30px 20px; 
+            background: rgba(0, 20, 0, 0.9); box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            text-align: center;
+        }
+        .input-field {
+            width: 100%; background: rgba(255, 255, 255, 0.1); border: 1px solid #00ff00;
+            border-radius: 10px; padding: 12px; color: #fff; text-align: center;
+            margin-bottom: 20px; outline: none; font-size: 14px; letter-spacing: 2px;
+        }
+        .btn-premium { 
+            background: linear-gradient(to right, #00ff00, #ccff00); border: none; 
+            border-radius: 10px; padding: 14px; width: 100%; color: #000; 
+            font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 15px;
+        }
+        .btn-telegram { 
+            background: rgba(255, 255, 255, 0.05); border: 1px solid #333; 
+            border-radius: 10px; padding: 10px; width: 100%; color: #00ff00; 
+            text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        /* --- NEW SIGNAL PANEL DESIGN (AS PER SCREENSHOT) --- */
+        #signalPanel {
+            position: absolute; top: 150px; left: 50%; transform: translateX(-50%);
+            width: 160px; height: 160px; /* Square box as per image */
+            background: rgba(18, 2, 28, 0.95); /* Dark purple/black shade */
+            border: 2px solid #1fa7ff; /* Blueish border from screenshot */
+            border-radius: 18px;
+            color: #fff; z-index: 10000;
+            box-shadow: 0 0 15px rgba(31, 167, 255, 0.4);
+            cursor: move; touch-action: none;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
+        }
+        .panel-team-name {
+            font-size: 14px; font-weight: bold; color: #1fa7ff;
+            text-transform: uppercase; margin-bottom: 4px;
+        }
+        .panel-time { font-size: 12px; color: #aaa; margin-bottom: 8px; }
+        .panel-countdown { font-size: 18px; font-weight: bold; color: #ff00ff; margin-bottom: 5px; }
+        .p-signal { font-size: 32px; font-weight: 900; color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+
+        #gamePage { display: none; height: 100vh; position: relative; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+<div id="loginPage">
+    <div class="container">
+        <div class="header-box">
+            <div class="round-logo">TEAM<br>AV</div>
+            <div>
+                <h2 style="color:#00ff00; font-size:18px;">TEAM AV</h2>
+                <p style="color:#ccff00; font-size:11px; font-weight:bold;">TEAM AV • 1-MINUTE AUTO SIGNAL</p>
+            </div>
+        </div>
+        <div class="main-box">
+            <h3 style="color:#00ff00; margin-bottom:20px; font-size:18px;">DK WIN NEW MOD</h3>
+            <input type="text" id="accessKey" class="input-field" placeholder="ENTER ACCESS KEY">
+            <button class="btn-premium" onclick="checkPass()">🔓 UNLOCK PREMIUM SYSTEM</button>
+            <a href="https://t.me/+Z-1lO8scibBkMzg9" class="btn-telegram">✈️ GET ACCESS KEY</a>
+        </div>
+    </div>
+</div>
+
+<div id="gamePage">
+    <div id="signalPanel">
+        <div class="panel-team-name">TEAM AV</div>
+        <div id="time_text" class="panel-time">00:00:00</div>
+        <div id="countdown" class="panel-countdown">-- s</div>
+        <div id="sig_text" class="p-signal">WAIT</div>
+    </div>
+    <iframe id="gameIframe" src=""></iframe>
+</div>
+
+<script>
+    const REG_LINK = "https://dkwin.org/#/register?invitationCode=57752122669";
+    const API_URL = 'https://api.bdg88zf.com/api/webapi/GetGameIssue';
+    const PAYLOAD = { typeId: 1, language: 0, random: "e7fe6c090da2495ab8290dac551ef1ed", signature: "1F390E2B2D8A55D693E57FD905AE73A7", timestamp: Math.floor(Date.now()/1000) };
+    
+    let lastPeriod = "";
+
+    function checkPass() {
+        if (document.getElementById('accessKey').value === "123456") {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('gamePage').style.display = 'block';
+            document.getElementById('gameIframe').src = REG_LINK;
+            startMasterSync();
+            startCountdown();
+        } else { alert("WRONG ACCESS KEY!"); }
+    }
+
+    // Draggable Logic
+    const panel = document.getElementById("signalPanel");
+    let active = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+    panel.addEventListener("touchstart", dragStart); panel.addEventListener("mousedown", dragStart);
+    window.addEventListener("touchend", dragEnd); window.addEventListener("mouseup", dragEnd);
+    window.addEventListener("touchmove", drag); window.addEventListener("mousemove", drag);
+
+    function dragStart(e) {
+        initialX = (e.type === "touchstart" ? e.touches[0].clientX : e.clientX) - xOffset;
+        initialY = (e.type === "touchstart" ? e.touches[0].clientY : e.clientY) - yOffset;
+        if (e.target === panel || panel.contains(e.target)) active = true;
+    }
+    function drag(e) {
+        if (active) {
+            e.preventDefault();
+            currentX = (e.type === "touchmove" ? e.touches[0].clientX : e.clientX) - initialX;
+            currentY = (e.type === "touchmove" ? e.touches[0].clientY : e.clientY) - initialY;
+            xOffset = currentX; yOffset = currentY;
+            panel.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        }
+    }
+    function dragEnd() { active = false; }
+
+    // Logic for Countdown
+    function startCountdown() {
+        setInterval(() => {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const remaining = 60 - seconds;
+            document.getElementById("countdown").innerText = remaining + " s";
+            document.getElementById("time_text").innerText = now.toLocaleTimeString([], {hour12: false});
+        }, 1000);
+    }
+
+    // Real-time Sync Logic
+    async function startMasterSync() {
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(PAYLOAD)
+            });
+            const json = await response.json();
+            if (json && json.data) {
+                let currentIssue = json.data.issueNumber;
+                if (currentIssue !== lastPeriod) {
+                    lastPeriod = currentIssue;
+                    let sum = currentIssue.split('').reduce((a, b) => a + (parseInt(b) || 0), 0);
+                    let prediction = (sum % 2 === 0) ? "BIG" : "SMALL";
+                    document.getElementById("sig_text").innerText = prediction;
+                }
+            }
+        } catch (e) { console.error("Sync Error"); }
+        setTimeout(startMasterSync, 2000);
+    }
+</script>
+
+</body>
+</html>
